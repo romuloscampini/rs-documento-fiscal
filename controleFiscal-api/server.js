@@ -1,16 +1,13 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var mongoose = require('mongoose');
-
 var app = express();
-
-
-//dep interna
-var registrador = require('./app/controller/registrarCompra');
+var routerCompra = require('./app/routes/rotaCompra');
 
 // configuração do banco
 var configDB = require('./config/database.js');
 mongoose.connect(configDB.url);
+mongoose.set('debug', true);
 
 // configurações da aplicação
 app.use(bodyParser.json());
@@ -18,12 +15,12 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-
-app.get('/comprar', function(req,res) {
-    registrador.novaCompra(function(compra){
-        res.send(compra);
-    });
-});
+app.use('/compras', routerCompra);
+// app.get('/comprar', function(req,res) {
+//     controleOC.mockNovaCompra(null, function(compra){
+//         res.send(compra);
+//     });
+// });
 
 
 var porta = process.env.PORT || 3005;

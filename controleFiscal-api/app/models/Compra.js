@@ -7,28 +7,41 @@ var schemaCompra = mongoose.Schema({
     dataCompra: Date,
     valor:  Number,
     tipo: String,
+    categoria: String,
     documentoPagamento: {
         nrDocumentoPagamento: String,
         tipo: String,
         dataVencimento: Date,
         valor: Number,
-        desconto: Number
-        // docPag: Binary
+        desconto: Number,
+        docPagamento: {
+            data: Buffer,
+            contentType: String
+        }
     },
     comprovante: {
         dataPagamento: Date,
         valorPago: Number,
-        contaDebito: String
-        // docComprovante: Binary
+        contaDebito: String,
+        docComprovante: {
+            data: Buffer,
+            contentType: String
+        }
     },
     documentoFiscal: {
         dataRecebimento: Date,
-        obs: String
-        // docFiscal: Binary
+        obs: String,
+        docFiscal: {
+            data: Buffer,
+            contentType: String
+        }
     },
     registroFiscal: {
-        tipo: String
-        // docRegFiscal: Binary
+        tipo: String,
+        docRegFiscal: {
+            data: Buffer,
+            contentType: String
+        }
     }
 });
 
