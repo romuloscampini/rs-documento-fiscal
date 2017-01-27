@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
     var body = req.body;
     var busca = req.query.busca;
 
-    console.log('vai buscar por', busca);
+    console.log('buscar compra por', busca);
     if (busca) {
         controleOC.buscar(busca, function (err, dados) {
             if(err){
@@ -29,4 +29,50 @@ router.get('/', function(req, res) {
     }
 });
 
+router.post('/criar', function(req, res) {
+    var dados = req.body;
+
+    console.log('criar compra');
+    controleOC.salvar(dados, function(err) {
+        if (err) {
+            res.send(err);
+        }
+        res.json({mensagem: 'criacao de compra realizada!'});
+    });
+});
+
+router.route('/:id')
+    .get(function(req, res){
+        console.log('buscar compra por id');
+        controleOC.buscarPorId(req.params.id, function(err, compra){
+            if (err) {
+                res.send(err);
+            }
+            res.json(compra);
+        });
+    })
+    .put(function(req, res) {
+        console.log('atualizar compra');
+        controleOC.salvar({id: req.params.id}, function (err) {
+            if (err) {
+                res.send(err);
+            }
+            res.json({ mensagem: 'atualizacao de compra realizada'});
+        });
+    })
+    .delete(function(req, res){
+        console.log('apagar compra');
+        // controleOC.excluir
+    });
+
+router.post('/mock', function(req, res) {
+    console.log('criar compra mock');
+
+    controleOC.mockNovaCompra(null, function(err) {
+        if (err) {
+            res.send(err);
+        }
+        res.json({mensagem: 'criacao de compra mock realizada!'});
+    });
+});
 module.exports = router;

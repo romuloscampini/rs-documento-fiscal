@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var schemaCompra = mongoose.Schema({
+var schemaCompra = new Schema({
     nomeProduto: String,
     nomeLoja: String,
     nomeFornecedor: String,
@@ -8,7 +9,7 @@ var schemaCompra = mongoose.Schema({
     valor:  Number,
     tipo: String,
     categoria: String,
-    documentoPagamento: {
+    documentosPagamento: [{
         nrDocumentoPagamento: String,
         tipo: String,
         dataVencimento: Date,
@@ -18,8 +19,8 @@ var schemaCompra = mongoose.Schema({
             data: Buffer,
             contentType: String
         }
-    },
-    comprovante: {
+    }],
+    comprovantes: [{
         dataPagamento: Date,
         valorPago: Number,
         contaDebito: String,
@@ -27,22 +28,22 @@ var schemaCompra = mongoose.Schema({
             data: Buffer,
             contentType: String
         }
-    },
-    documentoFiscal: {
+    }],
+    documentoFiscal: [{
         dataRecebimento: Date,
         obs: String,
         docFiscal: {
             data: Buffer,
             contentType: String
         }
-    },
-    registroFiscal: {
+    }],
+    registroFiscal: [{
         tipo: String,
         docRegFiscal: {
             data: Buffer,
             contentType: String
         }
-    }
+    }]
 });
 
 module.exports = mongoose.model('Compra', schemaCompra);
