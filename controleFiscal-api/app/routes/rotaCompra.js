@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var router  = express.Router();
 var controleOC = require('../controllers/controleCompra');
+var controleUtils = require('../controllers/controleUtils');
+
 
 router.get('/', function(req, res) {
     var body = req.body;
@@ -30,10 +32,27 @@ router.get('/', function(req, res) {
 });
 
 router.post('/criar', function(req, res) {
-    var dados = req.body;
+    var body;
+    var filename;
+
+    // var body = controleUtils.uploadFile(req, function () {
+    //
+    // }
+
+
+
+    controleUtils.uploadFile(req, function(dados, err){
+        if(err){
+            throw err;
+        }else {
+            filename = dados.filename;
+            body = dados;
+            console.log(dados.filename);
+        }
+    });
 
     console.log('criar compra');
-    controleOC.salvar(dados, function(err) {
+    controleOC.salvar(body, function(err) {
         if (err) {
             res.send(err);
         }
