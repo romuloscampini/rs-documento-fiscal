@@ -32,33 +32,35 @@ router.get('/', function(req, res) {
 });
 
 router.post('/criar', function(req, res) {
+    var body = req.body;
+
+    console.log('criar compra');
+    controleOC.salvar(body, function(err, dados) {
+        if (err) {
+            res.status(200).json(err);
+        }
+        res.status(200).json({mensagem: 'criacao de compra realizada! ' + dados});
+    });
+
+});
+
+router.post('/upload', function(req, res) {
     var body;
     var filename;
 
-    // var body = controleUtils.uploadFile(req, function () {
-    //
-    // }
-
-
-
     controleUtils.uploadFile(req, function(dados, err){
         if(err){
-            throw err;
+            res.status(200).json(err);
         }else {
-            filename = dados.filename;
+            filename = dados.path;
             body = dados;
-            console.log(dados.filename);
+            console.log(dados.path);
+            res.status(200).json(dados);
         }
     });
 
-    console.log('criar compra');
-    controleOC.salvar(body, function(err) {
-        if (err) {
-            res.send(err);
-        }
-        res.json({mensagem: 'criacao de compra realizada!'});
-    });
 });
+
 
 router.route('/:id')
     .get(function(req, res){

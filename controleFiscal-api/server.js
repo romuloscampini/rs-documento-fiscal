@@ -20,7 +20,8 @@ app.use(bodyParser.text());
 
 app.use('/compras', routerCompra);
 
-app.post('/', function (req, res) {
+app.post('/upload', function (req, res) {
+
     var form = new formidable.IncomingForm();
 
     form.on('field', function(name, value) {
@@ -44,12 +45,7 @@ app.post('/', function (req, res) {
 
     // console.log(maoe);
     res.send("Post ok");
-})
-// app.get('/comprar', function(req,res) {
-//     controleOC.mockNovaCompra(null, function(compra){
-//         res.send(compra);
-//     });
-// });
+});
 
 
 var porta = process.env.PORT || 3005;

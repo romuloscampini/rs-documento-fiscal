@@ -39,7 +39,8 @@ function upload(req, callback){
 
     form.on('fields', function(field, value) {
         dados = {
-            field:  value
+            field:  value,
+            path:   filename
         };
     });
 
@@ -50,7 +51,8 @@ function upload(req, callback){
 
     // once all the files have been uploaded, send a response to the client
     form.on('end', function() {
-        res.send(filename);
+        // res.send(filename);
+        console.log("Upload complete!");
     });
 
     // parse the incoming request containing the form data
