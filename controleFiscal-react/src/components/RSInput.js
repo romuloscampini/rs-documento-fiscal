@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {Col, ControlLabel, FormControl, FormGroup, HelpBlock} from 'react-bootstrap';
 
-class FormCompraInput extends Component {
+class RSInput extends Component {
 
     constructor(props) {
         super(props);
-
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -21,8 +20,8 @@ class FormCompraInput extends Component {
 
         return (
             <FormGroup controlId={this.props.propriedade}>
-                <Col componentClass={ControlLabel} sm={3}>{this.props.label}</Col>
-                <Col sm={8}>
+                <Col componentClass={ControlLabel} sm={2} className="rs-label">{this.props.label}</Col>
+                <Col sm={6}>
                     <FormControl type={this.props.tipo != null ? this.props.tipo : 'input'} componentClass={this.props.textarea ? 'textarea' : 'input'} value={this.props.valor || ''} onChange={this.handleChange} />
                     {ajuda}
                 </Col>
@@ -31,4 +30,4 @@ class FormCompraInput extends Component {
     }
 }
 
-export default FormCompraInput;
+export default RSInput;
