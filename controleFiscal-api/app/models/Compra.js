@@ -15,7 +15,7 @@ var schemaCompra = new Schema({
         dataVencimento: Date,
         valor: Number,
         desconto: Number,
-        docPagamento: {
+        documento: {
             data: Buffer,
             contentType: String
         }
@@ -24,7 +24,7 @@ var schemaCompra = new Schema({
         dataPagamento: Date,
         valorPago: Number,
         contaDebito: String,
-        docComprovante: {
+        documento: {
             data: Buffer,
             contentType: String
         }
@@ -32,14 +32,14 @@ var schemaCompra = new Schema({
     documentoFiscal: [{
         dataRecebimento: Date,
         obs: String,
-        docFiscal: {
+        documento: {
             data: Buffer,
             contentType: String
         }
     }],
     registroFiscal: [{
         tipo: String,
-        docRegFiscal: {
+        documento: {
             data: Buffer,
             contentType: String
         }

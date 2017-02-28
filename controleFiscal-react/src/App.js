@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import FormCompra from './FormCompra';
+import CompraBox from './Compra';
 
 class App extends Component {
 
@@ -8,7 +8,7 @@ class App extends Component {
     return (
         <div>
             <Header/>
-            <FormCompra/>
+            <CompraBox/>
         </div>
     );
   }

@@ -6,55 +6,67 @@ var pdfPath = '/tmp/boleto.pdf';
 
 var controleOC = {
 
-    salvar: function(dados, callback){
-        if(dados.id){
-            //Já existe e só faz update
-            save(dados, callback);
+    salvar: function(dadosCompra, callback){
+        if(dadosCompra.id){
+            Compra.findById(dadosCompra.id, function(err, compra){
+                compra.nomeProduto  =  dadosCompra.nomeProduto;
+                compra.nomeLoja     = dadosCompra.nomeLoja;
+                nomeFornecedor      =  dadosCompra.nomeFornecedor;
+                compra.dataCompra   = dadosCompra.dataCompra;
+                compra.valor        =  dadosCompra.valor;
+                compra.tipo         = dadosCompra.tipo;
+                compra.categoria    = dadosCompra.categoria;
+
+                //Já existe e só faz update
+                save(compra, callback);
+            });
         }else {
             //Cria um novo
             var compra = new Compra();
-            compra.nomeProduto  =  dados.nomeProduto;
-            compra.nomeLoja     = dados.nomeLoja;
-            nomeFornecedor      =  dados.nomeFornecedor;
-            compra.dataCompra   = dados.dataCompra;
-            compra.valor        =  dados.valor;
-            compra.tipo         = dados.tipo;
-            compra.categoria    = dados.categoria;
-            compra.documentosPagamento = [{
-                nrDocumentoPagamento: dados.documentoPagamento.nrDocumentoPagamento,
-                tipo: dados.documentoPagamento.tipo,
-                dataVencimento: dados.documentoPagamento.dataVencimento,
-                valor: dados.documentoPagamento.valor,
-                desconto: dados.documentoPagamento.desconto,
-                docPagamento: {
-                    data: dados.documentoPagamento.docPagamento.data,
-                    contentType: dados.documentoPagamento.docPagamento.contentType
-                }
-            }];
-            compra.comprovante = [{
-                dataPagamento: dados.comprovante.dataPagamento,
-                valorPago: dados.comprovante.valorPago,
-                contaDebito: dados.comprovante.contaDebito,
-                docComprovante: {
-                    data: dados.comprovante.docComprovante.data,
-                    contentType: dados.comprovante.docComprovante.contentType
-                }
-            }];
-            compra.documentoFiscal = [{
-                dataRecebimento: dados.documentoFiscal.dataRecebimento,
-                obs: dados.documentoFiscal.obs,
-                docFiscal: {
-                    data: dados.documentoFiscal.docFiscal.data,
-                    contentType: dados.documentoFiscal.docFiscal.contentType
-                }
-            }];
-            compra.registroFiscal = [{
-                tipo: dados.registroFiscal.tipo,
-                docRegFiscal: {
-                    data: dados.registroFiscal.docFiscal.data,
-                    contentType: dados.registroFiscal.docFiscal.contentType
-                }
-            }];
+            console.log(dadosCompra);
+
+            compra.nomeProduto  =  dadosCompra.nomeProduto;
+            compra.nomeLoja     = dadosCompra.nomeLoja;
+            nomeFornecedor      =  dadosCompra.nomeFornecedor;
+            compra.dataCompra   = dadosCompra.dataCompra;
+            compra.valor        =  dadosCompra.valor;
+            compra.tipo         = dadosCompra.tipo;
+            compra.categoria    = dadosCompra.categoria;
+            // compra.documentosPagamento = [{
+            //     nrDocumentoPagamento: dados.documentoPagamento.nrDocumentoPagamento,
+            //     tipo: dados.documentoPagamento.tipo,
+            //     dataVencimento: dados.documentoPagamento.dataVencimento,
+            //     valor: dados.documentoPagamento.valor,
+            //     desconto: dados.documentoPagamento.desconto,
+            //     docPagamento: {
+            //         data: dados.documentoPagamento.docPagamento.data,
+            //         contentType: dados.documentoPagamento.docPagamento.contentType
+            //     }
+            // }];
+            // compra.comprovante = [{
+            //     dataPagamento: dados.comprovante.dataPagamento,
+            //     valorPago: dados.comprovante.valorPago,
+            //     contaDebito: dados.comprovante.contaDebito,
+            //     docComprovante: {
+            //         data: dados.comprovante.docComprovante.data,
+            //         contentType: dados.comprovante.docComprovante.contentType
+            //     }
+            // }];
+            // compra.documentoFiscal = [{
+            //     dataRecebimento: dados.documentoFiscal.dataRecebimento,
+            //     obs: dados.documentoFiscal.obs,
+            //     docFiscal: {
+            //         data: dados.documentoFiscal.docFiscal.data,
+            //         contentType: dados.documentoFiscal.docFiscal.contentType
+            //     }
+            // }];
+            // compra.registroFiscal = [{
+            //     tipo: dados.registroFiscal.tipo,
+            //     docRegFiscal: {
+            //         data: dados.registroFiscal.docFiscal.data,
+            //         contentType: dados.registroFiscal.docFiscal.contentType
+            //     }
+            // }];
             save(compra, callback);
         }
     },
@@ -149,7 +161,7 @@ function findById(id, callback){
 };
 
 function save(compra, callback){
-    Compra.save(compra, function(err) {
+    compra.save(function(err) {
         if(err){
             console.log("Ocorreu um erro");
             throw err;

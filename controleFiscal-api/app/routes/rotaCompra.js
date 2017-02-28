@@ -39,7 +39,7 @@ router.post('/criar', function(req, res) {
         if (err) {
             res.status(200).json(err);
         }
-        res.status(200).json({mensagem: 'criacao de compra realizada! ' + dados});
+        res.status(200).json({mensagem: 'criacao de compra realizada! '});
     });
 
 });

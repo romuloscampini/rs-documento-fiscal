@@ -18,6 +18,19 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.raw());
 app.use(bodyParser.text());
 
+app.use(function (req, res, next) {
+    // qualquer site pode conectar
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // somente estes métodos podem ser usados
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+
+    // só aceita estes headers
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
+
+    next();
+});
+
 app.use('/compras', routerCompra);
 
 app.post('/upload', function (req, res) {
