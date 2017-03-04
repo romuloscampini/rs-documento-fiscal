@@ -2,7 +2,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
-var routerCompra = require('./app/routes/rotaCompra');
+var routerCompra = require('./app/routes/CompraRouter');
 var formidable = require('formidable');
 
 // configuração do banco
@@ -18,6 +18,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.raw());
 app.use(bodyParser.text());
 
+
+//Liberar Cross-origin por causa do ajax no react
 app.use(function (req, res, next) {
     // qualquer site pode conectar
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,33 +34,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/compras', routerCompra);
-
-app.post('/upload', function (req, res) {
-
-    var form = new formidable.IncomingForm();
-
-    form.on('field', function(name, value) {
-        console.log("Nome do campo: " + name);
-        console.log("Valor: " + value);
-    });
-
-    form.parse(req, function(err, fields, files){
-        if(err){
-            console.log("Error");
-        }
-
-        if(fields){
-            console.log("achou campos");
-        }
-
-        if(files){
-            console.log("achou arq");
-        }
-    });
-
-    // console.log(maoe);
-    res.send("Post ok");
-});
 
 
 var porta = process.env.PORT || 3005;

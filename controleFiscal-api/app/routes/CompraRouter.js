@@ -5,8 +5,8 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var router  = express.Router();
-var controleOC = require('../controllers/controleCompra');
-var controleUtils = require('../controllers/controleUtils');
+var controleOC = require('../controllers/CompraController');
+var controleUtils = require('../controllers/UtilsController');
 
 
 router.get('/', function(req, res) {
