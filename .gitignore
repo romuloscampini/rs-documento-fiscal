@@ -40,3 +40,10 @@ jspm_packages
 .idea
 *.iml
 
+#Vagrant
+.vagrant
+
+#Temporary
+.DS_Store
+*.lock
+*.swp

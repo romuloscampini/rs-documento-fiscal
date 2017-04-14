@@ -29,6 +29,7 @@ app.use(function (req, res, next) {
 
     // só aceita estes headers
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
+    // res.setHeader('Access-Control-Allow-Headers', '*');
 
     next();
 });

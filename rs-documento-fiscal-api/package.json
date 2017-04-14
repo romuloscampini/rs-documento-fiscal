@@ -1,26 +1,26 @@
 {
-  "name": "controleFiscal-api",
+  "name": "rs-documento-fiscal-api",
   "version": "1.0.0",
-  "description": "Controle de Documentos Fiscais - API",
+  "description": "RS Documento e Controle Fiscal - API",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/romuloscampini/rs-documento-fiscal.git"
+    "url": "git+ssh://git@github.com/romuloscampini/rs-documento-fiscal.git"
   },
-  "author": "Romulo Scampini <romulo@scampini.com.br>",
+  "author": "Romulo Scampini",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/romuloscampini/rs-documento-fiscal/issues"
   },
   "homepage": "https://github.com/romuloscampini/rs-documento-fiscal#readme",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
     "formidable": "^1.1.1",
     "fs": "0.0.1-security",
-    "mongoose": "^4.7.6"
+    "mongoose": "^4.9.4"
   }
 }
