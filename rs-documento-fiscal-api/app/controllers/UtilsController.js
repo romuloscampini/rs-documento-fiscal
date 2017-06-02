@@ -1,5 +1,4 @@
 var fs = require('fs');
-var fs = require('fs');
 var path = require('path');
 var formidable = require('formidable');
 
@@ -17,6 +16,9 @@ var controleUtils = {
 
 
 function upload(req, callback){
+
+    let id = req.body.id;
+
     // create an incoming form object
     var form = new formidable.IncomingForm();
     var filename;
@@ -31,10 +33,11 @@ function upload(req, callback){
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
     form.on('file', function(field, file) {
-        console.log("Achou arquivo");
-        console.log(file.name);
-        fs.rename(file.path, path.join(form.uploadDir, file.name));
-        filename = file.name;
+        console.log("Recebeu arquivo");
+        filename = `${id}-${file.name}`;
+        console.log(filename);
+        fs.rename(file.path, path.join(form.uploadDir, filename));
+
     });
 
     form.on('fields', function(field, value) {

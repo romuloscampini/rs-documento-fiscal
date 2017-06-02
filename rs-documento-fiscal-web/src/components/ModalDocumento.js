@@ -14,10 +14,10 @@ import {
     Modal,
     Button
 } from 'react-bootstrap';
-import RSInput from './RSInput';
+import Input from './Input';
 import PubSub from 'pubsub-js';
 
-class RSModalDocumento extends Component {
+class ModalDocumento extends Component {
 
     constructor(props){
         super(props);
@@ -76,11 +76,11 @@ class RSModalDocumento extends Component {
                                 <Col lg={6} lgOffset={1}>
                                     <Form horizontal>
                                         <FormGroup>
-                                            <RSInput propriedade="nomeProduto" label="Produto" valor="" handleChange={this.handleChange} />
-                                            <RSInput propriedade="nomeLoja" label="Loja" valor="" handleChange={this.handleChange} />
-                                            <RSInput propriedade="nomeFornecedor" label="Fornecedor" valor="" handleChange={this.handleChange} />
-                                            <RSInput propriedade="dataCompra" label="Data de Compra" valor="" handleChange={this.handleChange} />
-                                            <RSInput propriedade="valor" label="Valor (R$)" valor="" handleChange={this.handleChange} />
+                                            <Input propriedade="nomeProduto" label="Produto" valor="" handleChange={this.handleChange} />
+                                            <Input propriedade="nomeLoja" label="Loja" valor="" handleChange={this.handleChange} />
+                                            <Input propriedade="nomeFornecedor" label="Fornecedor" valor="" handleChange={this.handleChange} />
+                                            <Input propriedade="dataCompra" label="Data de Compra" valor="" handleChange={this.handleChange} />
+                                            <Input propriedade="valor" label="Valor (R$)" valor="" handleChange={this.handleChange} />
                                         </FormGroup>
                                     </Form>
                                 </Col>
@@ -96,4 +96,4 @@ class RSModalDocumento extends Component {
     }
 }
 
-export default RSModalDocumento;
+export default ModalDocumento;

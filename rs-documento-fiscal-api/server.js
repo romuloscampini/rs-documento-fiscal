@@ -2,7 +2,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
-var routerCompra = require('./app/routes/CompraRouter');
+var routerCompra = require('./app/compra/CompraRouter');
 var formidable = require('formidable');
 
 // configuração do banco
@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use(bodyParser.raw());
 app.use(bodyParser.text());
 
@@ -34,7 +35,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/compras', routerCompra);
+app.use('/api/compras', routerCompra);
 
 
 var porta = process.env.PORT || 3005;

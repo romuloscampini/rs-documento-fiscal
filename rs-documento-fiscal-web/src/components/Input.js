@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Col, ControlLabel, FormControl, FormGroup, HelpBlock} from 'react-bootstrap';
+import {Col, ControlLabel, FormControl, FormGroup, HelpBlock } from 'react-bootstrap';
 
-class RSSelectBox extends Component {
+class Input extends Component {
 
     constructor(props) {
         super(props);
@@ -18,23 +18,16 @@ class RSSelectBox extends Component {
             ajuda = <HelpBlock>{this.props.ajuda}</HelpBlock>;
         }
 
-        const inputsOpcoes = [];
-        const opcoes = this.props.opcoes;
-        opcoes.forEach((opcao) => {
-            inputsOpcoes.push(
-                <option key={opcao.valor} value={opcao.valor}>{opcao.label}</option>
-            );
-
-        });
+        // let addon = null;
+        // if (this.props.addon) {
+        //     addon = <InputGroup.Addon>{this.props.addon}</InputGroup.Addon>;
+        // }
 
         return (
             <FormGroup controlId={this.props.propriedade}>
                 <Col componentClass={ControlLabel} sm={2} className="rs-label">{this.props.label}</Col>
                 <Col sm={6}>
-                    {/*{this.props.multiple ? 'multiple' : ''}*/}
-                    <FormControl componentClass='select' value={this.props.valor || ''} onChange={this.handleChange} placeholder="Selecione...">
-                        {inputsOpcoes}
-                    </FormControl>
+                    <FormControl type={this.props.tipo != null ? this.props.tipo : 'input'} componentClass={this.props.textarea ? 'textarea' : 'input'} value={this.props.valor || ''} onChange={this.handleChange}/>
                     {ajuda}
                 </Col>
             </FormGroup>
@@ -42,4 +35,4 @@ class RSSelectBox extends Component {
     }
 }
 
-export default RSSelectBox;
+export default Input;

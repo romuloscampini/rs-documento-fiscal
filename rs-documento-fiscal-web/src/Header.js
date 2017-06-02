@@ -1,65 +1,45 @@
 /**
  * Created by romuloscampini.
  */
-import React, { Component } from 'react';
-import {
-    Navbar,
-    Nav,
-    NavDropdown,
-    NavItem,
-    MenuItem
-} from 'react-bootstrap';
-import { Icon } from 'react-fa';
-import { Link } from 'react-router';
+import React, {Component} from 'react';
+import {Grid, Nav, NavItem, Navbar} from 'react-bootstrap';
+import {Icon} from 'react-fa';
+import {LinkContainer} from 'react-router-bootstrap';
 
-class Header extends Component {
+import logo from './logo.svg';
 
-    render() {
+export default class Header extends Component {
 
-        return (
-            <Navbar collapseOnSelect>
-                <Navbar.Header >
-                    <Navbar.Brand >
-                        <Link to="/">Controle Fiscal</Link>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Nav>
-                        <NavItem eventKey={1}>
-                            <Link to="/">Dashboard</Link>
-                        </NavItem>
-                        <NavDropdown eventKey={2} title="Operações" id="basic-nav-dropdown">
-                            <MenuItem eventKey={2.1}>
-                                <Link to="/compras">Compras / Pagamentos</Link>
-                            </MenuItem>
-                            {/*<MenuItem divider />*/}
-                            <MenuItem eventKey={2.2}>
-                                <Link to="/vendas">Vendas / Recebimentos</Link>
-                            </MenuItem>
-                        </NavDropdown>
-                        <NavDropdown eventKey={3} title="Configurações" id="basic-nav-dropdown">
-                            <MenuItem eventKey={3.1}>Listar</MenuItem>
-                            <MenuItem eventKey={3.2}>Another action</MenuItem>
-                            <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                            {/*<MenuItem divider />*/}
-                            <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                        </NavDropdown>
-                    </Nav>
-                    <Nav pullRight>
-                        <NavItem eventKey={1}>
-                            <Icon name="user" />
-                            <Link to="/user"> User</Link>
-                        </NavItem>
-                        <NavItem eventKey={2}>
-                            <Icon name="sign-out" />
-                            <Link to="/logout"> Logout</Link>
-                        </NavItem>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
+    render(){
+
+        return(
+            <div className="header">
+                <Navbar staticTop>
+                    <Grid>
+                        <Navbar.Header>
+                            <Navbar.Brand>
+                                <a href="/"><img src={logo} width="20px" title="SafeNote" alt="SafeNote" /></a>
+                            </Navbar.Brand>
+                        </Navbar.Header>
+                        <Nav pullLeft>
+                            <LinkContainer to={'/'} exact>
+                                <NavItem href="#"><Icon name="tachometer" /> Dashboard</NavItem>
+                            </LinkContainer>
+                            <LinkContainer to={'/compras'} exact>
+                                <NavItem href="#"><Icon name="download" /> Compras</NavItem>
+                            </LinkContainer>
+                            <LinkContainer to={'/vendas'}>
+                                <NavItem href="#"><Icon name="upload" /> Venda</NavItem>
+                            </LinkContainer>
+                        </Nav>
+                        <Nav pullRight>
+                            <LinkContainer to={'/logout'}>
+                                <NavItem href="#"><Icon name="user" /> Logout</NavItem>
+                            </LinkContainer>
+                        </Nav>
+                    </Grid>
+                </Navbar>
+            </div>
         );
     }
 }
-
-export default Header;

@@ -5,7 +5,7 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var router  = express.Router();
-var controleOC = require('../controllers/CompraController');
+var controleOC = require('./CompraController');
 var controleUtils = require('../controllers/UtilsController');
 
 

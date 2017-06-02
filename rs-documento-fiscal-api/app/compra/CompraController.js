@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Compra = require('../models/Compra');
+var Compra = require('./Compra');
 var fs = require('fs');
 
 var pdfPath = '/tmp/boleto.pdf';
@@ -25,13 +25,17 @@ var controleOC = {
             var compra = new Compra();
             console.log(dadosCompra);
 
-            compra.nomeProduto  =  dadosCompra.nomeProduto;
-            compra.nomeLoja     = dadosCompra.nomeLoja;
-            nomeFornecedor      =  dadosCompra.nomeFornecedor;
-            compra.dataCompra   = dadosCompra.dataCompra;
-            compra.valor        =  dadosCompra.valor;
-            compra.tipo         = dadosCompra.tipo;
-            compra.categoria    = dadosCompra.categoria;
+            compra.nomeProduto          =  dadosCompra.nomeProduto;
+            compra.nomeLoja             = dadosCompra.nomeLoja;
+            nomeFornecedor              =  dadosCompra.nomeFornecedor;
+            compra.dataCompra           = dadosCompra.dataCompra;
+            compra.valor                =  dadosCompra.valor;
+            compra.tipo                 = dadosCompra.tipo;
+            compra.categoria            = dadosCompra.categoria;
+            compra.documentosPagamento  = dadosCompra.documentosPagamento;
+            compra.comprovantes         = dadosCompra.comprovantes;
+            compra.documentoFiscal      = dadosCompra.documentoFiscal;
+            compra.registroFiscal       = dadosCompra.registroFiscal;
 
             save(compra, callback);
         }
