@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  db:
+    image: mongo:3.4.5
+    container_name: safenotedb
+    ports:
+      - "27017:27017"
+    volumes:
+      - /opt/scampini/containers/data/safenotedb:/data/db
+
+#    environment:
+#      -
