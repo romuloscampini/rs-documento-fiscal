@@ -15,13 +15,13 @@ class CompraTabela extends Component{
 
         const compraTabelaLinhas = [];
         compras.forEach(compra => {
-            compraTabelaLinhas.push(<CompraTabelaLinha key={compra._id} compra={compra} />);
+            compraTabelaLinhas.push(<CompraTabelaLinha key={compra.id} compra={compra} />);
         });
 
-        console.log(compraTabelaLinhas.length);
+        // console.log(compraTabelaLinhas.length);
 
         return (
-            <Table hover responsive>
+            <Table striped bordered hover responsive>
                 <thead>
                     <tr>
                         {/*<th>ID</th>*/}

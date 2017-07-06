@@ -19,9 +19,9 @@ class CompraTabelaLinha extends Component {
               <td>{compra.nomeFornecedor}</td>
               <td>{compra.dataCompra}</td>
               <td>{'R$ ' + compra.valor}</td>
-              <td>{compra.tipo}</td>
+              <td>{compra.tipoCompra}</td>
               {/*<td>{compra.documentos.length > 0 ? 'Sim' : 'Nao'}</td>*/}
-              <td>{compra.documentosPagamento.length > 0 ? 'Sim' : 'Nao'}</td>
+              <td>{compra.documentosPagamento ? 'Sim' : 'Nao'}</td>
           </tr>
         );
     }

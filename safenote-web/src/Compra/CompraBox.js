@@ -14,6 +14,7 @@ import {
 import Promise from 'es6-promise';
 import { Icon } from 'react-fa';
 import { LinkContainer } from 'react-router-bootstrap';
+import urlApi from '../config/Routes';
 
 import CompraTabela from "./CompraTabela";
 
@@ -34,13 +35,14 @@ class CompraBox extends Component{
     }
 
     componentWillMount(){
-        request.get(`http://localhost:3005/api/compras`)
+        request.get(urlApi.pagamento)
             .accept('application/json')
             .then(getJson)
             .then(dados => {
-                // console.log(dados.length);
+                console.log("Size de Dados: " + dados.length);
+                console.log("Dados: " + dados);
                 this.setState({compras: dados});
-                console.log('tamanho array: ' + this.state.compras.length);
+                // console.log('tamanho array: ' + this.state.compras.length);
             })
             .catch(error => {
                 console.log(error);
@@ -48,13 +50,23 @@ class CompraBox extends Component{
     }
 
     render(){
+            {/*<Grid bsClass="container-fluid">*/}
         return (
-            <Grid bsClass="container-fluid">
+            <Grid>
                 <Row style={{marginBottom: 15}}>
-                    <Col lg={9} lgOffset={2}>
+                    <Col xs={12} md={10} mdOffset={1}>
                         <Form horizontal>
                             <FormGroup>
-                                <PageHeader><small><h3>Compras</h3></small></PageHeader>
+                                <PageHeader>
+
+                                    <small><h3>Pagamentos
+                                    <LinkContainer to={'/form'} exact>
+                                        <Button className="pull-right" bsStyle="success">
+                                            <Icon name="plus"/> Novo Pagamento
+                                        </Button>
+                                    </LinkContainer>
+                                    </h3></small>
+                                </PageHeader>
                                 <CompraTabela compras={this.state.compras} />
 
                                 {/*<PageHeader><small><h4 className="rs-title">Informações de compra</h4></small></PageHeader>*/}

@@ -9,11 +9,11 @@ var controleOC = {
     salvar: function(dadosCompra, callback){
         if(dadosCompra.id){
             Compra.findById(dadosCompra.id, function(err, compra){
-                compra.nomeProduto  =  dadosCompra.nomeProduto;
+                compra.nomeProduto  = dadosCompra.nomeProduto;
                 compra.nomeLoja     = dadosCompra.nomeLoja;
-                nomeFornecedor      =  dadosCompra.nomeFornecedor;
+                nomeFornecedor      = dadosCompra.nomeFornecedor;
                 compra.dataCompra   = dadosCompra.dataCompra;
-                compra.valor        =  dadosCompra.valor;
+                compra.valor        = dadosCompra.valor;
                 compra.tipo         = dadosCompra.tipo;
                 compra.categoria    = dadosCompra.categoria;
 

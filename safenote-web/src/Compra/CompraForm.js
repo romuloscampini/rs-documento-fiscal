@@ -16,7 +16,8 @@ import {
     Tab,
     Nav,
     NavItem,
-    InputGroup
+    Panel,
+    PanelGroup
 } from 'react-bootstrap';
 import $ from 'jquery';
 import request from 'superagent';
@@ -26,6 +27,7 @@ import Input from '../components/Input';
 import ModalDocumento from '../components/ModalDocumento';
 import SelectBox from '../components/SelectBox';
 import PubSub from 'pubsub-js';
+import urlAPI from '../config/Routes';
 
 class CompraForm extends Component {
 
@@ -40,34 +42,31 @@ class CompraForm extends Component {
     estadoInicial() {
         if (this.props.compra){
             this.state = {
-                edicao:         true,
-                exibeModal:     false,
-                nomeProduto:    this.props.compra.nomeProduto,
-                nomeLoja:       this.props.compra.nomeLoja,
-                nomeFornecedor: this.props.compra.nomeFornecedor,
-                dataCompra:     this.props.compra.dataCompra,
-                valor:          this.props.compra.valor,
-                tipo:           this.props.compra.tipo,
-                categoria:      this.props.compra.categoria
-                // documentosPagamento: {
-                //     documento:
-                // }
-            }
-        }else{
-            this.state = {
-                edicao:         false,
-                exibeModal:     false,
-                nomeProduto:    '',
-                nomeLoja:       '',
-                nomeFornecedor: '',
-                dataCompra:     '',
-                valor:          '',
-                tipo:           'PRODUCT',
-                categoria:      '',
+                edicao: true,
+                exibeModal: false,
+                compra: {
+                    nomeProduto: this.props.compra.nomeProduto,
+                    nomeLoja: this.props.compra.nomeLoja,
+                    nomeFornecedor: this.props.compra.nomeFornecedor,
+                    dataCompra: this.props.compra.dataCompra,
+                    valor: this.props.compra.valor,
+                    tipo: this.props.compra.tipo,
+                    categoria: this.props.compra.categoria
+                    // documentosPagamento: {
+                    //     documento:
+                    // }
+                },
                 documentosPagamento: {
-                    documento:{
-                        data: '',
-                        contentType: ''
+                    documento: []
+                }
+            }
+        }else {
+            this.state = {
+                edicao: false,
+                exibeModal: false,
+                compra: {
+                    documentosPagamento: {
+                        documento: []
                     }
                 }
             }
@@ -77,21 +76,25 @@ class CompraForm extends Component {
     onDrop(acceptedFiles, rejectedFiles) {
         console.log('Accepted files: ', acceptedFiles);
         console.log('Rejected files: ', rejectedFiles);
-        let urlAPI = 'http://localhost:3005/compras';
-        var req = request.post(urlAPI + '/upload');
-        acceptedFiles.forEach((file)=> {
-            req.attach(file.name, file);
-        });
-        req.end(function(err, res){
-            console.log(res);
-        });
+
+        this.setState({ compra: { documentosPagamento: { documento: acceptedFiles}}});
+        // var req = request.post(urlAPI.pagamento + '/upload');
+        // acceptedFiles.forEach((file)=> {
+        //     req.attach(file.name, file);
+        // });
+        // req.end(function(err, res){
+        //     console.log(res);
+        // });
     }
 
     handleChange(propriedade, novoValor) {
         console.log('novo valor:', propriedade, novoValor);
 
+        let compra = this.state.compra;
+        compra[propriedade] = novoValor;
+
         // passando o nome da chave programaticamente usando []
-        this.setState({[propriedade]: novoValor});
+        this.setState({[compra]: compra});
 
         console.log('handleChange', JSON.stringify(this.state.propriedade));
     }
@@ -105,29 +108,30 @@ class CompraForm extends Component {
     }
 
     salvarCompra(){
-        console.log('Salvar compra');
+        console.log('Salvar model');
 
-        const {edicao, nomeProduto, nomeLoja, nomeFornecedor, dataCompra, valor, tipo, categoria } = this.state;
+        const {edicao, compra } = this.state;
         const _id = this.props.compra ? this.props.compra._id : null;
 
-        const compra = { nomeProduto, nomeLoja, nomeFornecedor, dataCompra, valor, tipo, categoria };
-
-        let urlAPI = 'http://localhost:3005/compras/';
+        // const compra = { nomeProduto, nomeLoja, nomeFornecedor, dataCompra, valor, tipo, categoria };
 
         let metodo = null;
+        let url = urlAPI.pagamento;
 
         if (edicao) {
-            urlAPI += _id;
+            url += '/' + _id;
             compra._id = _id;
             metodo = 'PUT';
         } else {
-            urlAPI += 'criar';
+            console.log(url);
+            url += '/salvar';
+            console.log(url);
             metodo = 'POST';
         }
 
         // http://stackoverflow.com/questions/12693947/jquery-ajax-how-to-send-json-instead-of-querystring
         $.ajax({
-            url: urlAPI,
+            url: url,
             data: JSON.stringify(compra),
             contentType: 'application/json',
             type: metodo,
@@ -176,54 +180,67 @@ class CompraForm extends Component {
             }
             ];
 
+        let dropzoneRef;
+
         return (
             <Grid bsClass="container-fluid">
                 <Row style={{marginBottom: 15}}>
-                    <Col lg={9} lgOffset={3}>
+                    <Col lg={8} lgOffset={2}>
                         <Form horizontal>
                             <FormGroup>
-                                <PageHeader>Compra</PageHeader>
-                                <PageHeader><small><h4 className="rs-title">Informações de compra</h4></small></PageHeader>
-                                <Input propriedade="nomeProduto" label="Produto" valor={this.state.nomeProduto} handleChange={this.handleChange}/>
-                                <Input propriedade="nomeLoja" label="Loja" valor={this.state.nomeLoja} handleChange={this.handleChange}/>
-                                <Input propriedade="nomeFornecedor" label="Fornecedor" valor={this.state.nomeFornecedor} handleChange={this.handleChange} />
-                                <Input propriedade="dataCompra" label="Data de Compra" valor={this.state.dataCompra} handleChange={this.handleChange} />
-                                <Input propriedade="valor" label="Valor (R$)" valor={this.state.valor} handleChange={this.handleChange} />
-                                <SelectBox propriedade="tipo" valor={this.state.tipo} opcoes={opcoes} label="Tipo de Compra" handleChange={this.handleChange}/>
-                                <PageHeader><small><h4 className="rs-title">Documentos</h4></small></PageHeader>
-                                <Tabs defaultActiveKey={1}>
-                                    <Tab eventKey={1} title="Boleto">
-                                        <Dropzone onDrop={this.onDrop} multiple={false}>
-                                            {/*{({ isDragActive, isDragReject }) => {*/}
-                                            {/*if (isDragActive) {*/}
-                                            {/*return "This file is authorized";*/}
-                                            {/*}*/}
-                                            {/*if (isDragReject) {*/}
-                                            {/*return "This file is not authorized";*/}
-                                            {/*}*/}
-                                            {/*return "Try dropping some files";*/}
-                                            {/*}}*/}
-                                            <div>Try dropping some files here, or click to select files to upload.</div>
-                                        </Dropzone>
-                                        {/*<RSInput propriedade="documentosPagamento" tipo="file" label="Arquivo" valor={this.state.documentosPagamento.documento.data}/>*/}
-                                        <p>Documentos adicionados: 0</p>
-                                        <Button bsStyle="success" onClick={this.handleModalChange.bind(this)}>
-                                            <Icon name="plus"/> Incluir
-                                        </Button>
-                                        <ModalDocumento titulo="Incluir Boleto"
-                                                          propriedade="boleto"
-                                                          exibeModal={this.state.exibeModal}
-                                                          handleChange={this.handleChange}>
-                                            {/*fecha={!this.state.showModal}>*/}
-                                        </ModalDocumento>
-                                    </Tab>
-                                    <Tab eventKey={2} title="Comprovante de Pag.">Tab 2 content</Tab>
-                                    <Tab eventKey={3} title="NF" >Tab 3 content</Tab>
-                                    <Tab eventKey={4} title="DARF/Outros" >Tab 3 content</Tab>
-                                </Tabs>
+                                <PageHeader><h3>Pagamentos</h3></PageHeader>
+                                <PageHeader>
+                                    <small><h4 className="rs-title">Informações de compra</h4></small>
+                                </PageHeader>
+                                <Input propriedade="nomeProduto" label="Produto" valor={this.state.compra.nomeProduto} handleChange={this.handleChange}/>
+                                <Input propriedade="nomeLoja" label="Loja" valor={this.state.compra.nomeLoja} handleChange={this.handleChange}/>
+                                <Input propriedade="nomeFornecedor" label="Fornecedor" valor={this.state.compra.nomeFornecedor} handleChange={this.handleChange} />
+                                <Input propriedade="dataCompra" label="Data de Compra" valor={this.state.compra.dataCompra} handleChange={this.handleChange} />
+                                <Input propriedade="valor" label="Valor (R$)" valor={this.state.compra.valor} handleChange={this.handleChange} />
+                                <SelectBox propriedade="tipo" valor={this.state.compra.tipo} opcoes={opcoes} label="Tipo de Compra" handleChange={this.handleChange}/>
+                                <Panel>
+                                    <h4 className="rs-title">Documentos</h4>
+                                    <Tabs defaultActiveKey={1}>
+                                        <Tab eventKey={1} title="Boleto">
+                                            <Dropzone ref={(node) => { dropzoneRef = node; }} onDrop={this.onDrop.bind(this)} multiple={false}>
+                                                <h3> Arquivo anexo: </h3>
+
+                                                <ul>
+                                                    { this.state.compra.documentosPagamento.documento.map(f => <li>{f.name} - {f.size} bytes</li>)}
+                                                </ul>
+                                                {/*/!*{({ isDragActive, isDragReject }) => {*!/*/}
+                                                {/*/!*if (isDragActive) {*!/*/}
+                                                {/*/!*return "This file is authorized";*!/*/}
+                                                {/*/!*}*!/*/}
+                                                {/*/!*if (isDragReject) {*!/*/}
+                                                {/*/!*return "This file is not authorized";*!/*/}
+                                                {/*/!*}*!/*/}
+                                                {/*/!*return "Try dropping some files";*!/*/}
+                                                {/*/!*}}*!/*/}
+                                                {/*/!*<div>Try dropping some files here, or click to select files to upload.</div>*!/*/}
+                                                {/*/!*<p>Documentos adicionados: 0</p>*!/*/}
+                                            </Dropzone>
+                                            <br/>
+                                            {/*<RSInput propriedade="documentosPagamento" tipo="file" label="Arquivo" valor={this.state.documentosPagamento.documento.data}/>*/}
+                                            {/*<Button bsStyle="success" onClick={this.handleModalChange.bind(this)}>*/}
+                                            <Button bsStyle="success" onClick={() => { dropzoneRef.open() }}>
+                                                <Icon name="plus"/> Anexar
+                                            </Button>
+                                            <ModalDocumento titulo="Incluir Boleto"
+                                                              propriedade="boleto"
+                                                              exibeModal={this.state.exibeModal}
+                                                              handleChange={this.handleChange}>
+                                                {/*fecha={!this.state.showModal}>*/}
+                                            </ModalDocumento>
+                                        </Tab>
+                                        <Tab eventKey={2} title="Comprovante de Pag.">Tab 2 content</Tab>
+                                        <Tab eventKey={3} title="NF" >Tab 3 content</Tab>
+                                        <Tab eventKey={4} title="DARF/Outros" >Tab 3 content</Tab>
+                                    </Tabs>
+                                </Panel>
                                 <p></p>
                                 <Button bsStyle="primary" onClick={this.salvarCompra.bind(this)}>
-                                    Salvar
+                                    <Icon name="floppy-o"/> Salvar
                                 </Button>
                             </FormGroup>
                     </Form>

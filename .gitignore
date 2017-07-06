@@ -36,9 +36,11 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-#IntelliJ
+### IntelliJ IDEA ###
 .idea
+*.iws
 *.iml
+*.ipr
 
 #Vagrant
 .vagrant
@@ -47,3 +49,21 @@ jspm_packages
 .DS_Store
 *.lock
 *.swp
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans 
+
+target/
+!.mvn/wrapper/maven-wrapper.jar

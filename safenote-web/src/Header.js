@@ -26,10 +26,10 @@ export default class Header extends Component {
                                 <NavItem href="#"><Icon name="tachometer" /> Dashboard</NavItem>
                             </LinkContainer>
                             <LinkContainer to={'/compras'} exact>
-                                <NavItem href="#"><Icon name="download" /> Compras</NavItem>
+                                <NavItem href="#"><Icon name="download" /> Pagamento</NavItem>
                             </LinkContainer>
                             <LinkContainer to={'/vendas'}>
-                                <NavItem href="#"><Icon name="upload" /> Venda</NavItem>
+                                <NavItem href="#"><Icon name="upload" /> Recebimento</NavItem>
                             </LinkContainer>
                         </Nav>
                         <Nav pullRight>
