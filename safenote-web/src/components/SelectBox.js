@@ -30,7 +30,7 @@ class SelectBox extends Component {
         return (
             <FormGroup controlId={this.props.propriedade}>
                 <Col componentClass={ControlLabel} sm={2} className="rs-label">{this.props.label}</Col>
-                <Col sm={6}>
+                <Col sm={this.props.size || 6}>
                     {/*{this.props.multiple ? 'multiple' : ''}*/}
                     <FormControl componentClass='select' value={this.props.valor || ''} onChange={this.handleChange} placeholder="Selecione...">
                         {inputsOpcoes}

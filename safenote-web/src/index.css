@@ -44,3 +44,7 @@ body {
 .navbar-brand {
   color: #337ab7;
 }
+
+.rs-navbar {
+    margin-bottom: 0px;
+}

@@ -11,17 +11,16 @@ class CompraTabela extends Component{
 
     render(){
 
-        const {compras} = this.props;
+        const {pagamentos} = this.props;
 
-        const compraTabelaLinhas = [];
-        compras.forEach(compra => {
-            compraTabelaLinhas.push(<CompraTabelaLinha key={compra.id} compra={compra} />);
+        const pagamentoTabelaLinhas = [];
+        pagamentos.forEach(pagamento => {
+            pagamentoTabelaLinhas.push(<CompraTabelaLinha key={pagamento.id} pagamento={pagamento} />);
         });
 
-        // console.log(compraTabelaLinhas.length);
-
+            {/*<Table striped bordered hover responsive>*/}
         return (
-            <Table striped bordered hover responsive>
+            <Table striped hover responsive>
                 <thead>
                     <tr>
                         {/*<th>ID</th>*/}
@@ -29,13 +28,14 @@ class CompraTabela extends Component{
                         <th>Loja</th>
                         <th>Fornecedor</th>
                         <th>Data Compra</th>
-                        <th>Valor</th>
-                        <th title="Produto ou Serviço">Tipo de Compra</th>
-                        <th><Icon name="file-o" title="Possui Documentos ?"/></th>
+                        {/*<th>Valor</th>*/}
+                        <th><Icon name="paperclip" title="Possui Documentos ?"/></th>
+                        <th>Pago</th>
+                        <th>Operações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {compraTabelaLinhas}
+                    {pagamentoTabelaLinhas}
                 </tbody>
             </Table>
         );

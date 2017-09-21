@@ -3,8 +3,8 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Header from './Header';
 import Home from './Home';
-import CompraBox from './Compra/CompraBox';
-import CompraForm from './Compra/CompraForm';
+import CompraBox from './Pagamento/CompraBox';
+import CompraForm from './Pagamento/CompraForm';
 
 class App extends Component {
 

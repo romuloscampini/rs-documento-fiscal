@@ -21,7 +21,6 @@ class ModalDocumento extends Component {
 
     constructor(props){
         super(props);
-        console.log('passando no constructor');
         // this.state = {exibe: this.props.exibe};
         this.handleChange = this.handleChange.bind(this);
         this.handleModalChange = this.handleModalChange.bind(this);
@@ -35,21 +34,7 @@ class ModalDocumento extends Component {
 
     handleModalChange(event) {
         this.props.handleChange('exibeModal', event.target.value);
-
-    //     console.log('passando no handleModalChange');
-    //
-    //     this.setState(prevState => ({
-    //         exibe: !prevState.exibe
-    //     }));
-    //
-    //     PubSub.publish('mostraModal', !this.state.exibe);
-    //     // this.props.handleChange('showModal', !this.state.exibe);
     }
-
-    // componentWillReceiveProps(nextProps){
-    //     console.log('Vai receber props: ' + nextProps.exibe);
-    //     this.setState({exibe: nextProps.exibe})
-    // }
 
     render() {
         var style = {
