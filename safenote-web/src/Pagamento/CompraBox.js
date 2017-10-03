@@ -131,7 +131,15 @@ class CompraBox extends Component{
                     {/*<Col xs={12} md={10} mdOffset={1}>*/}
                     <Col>
                         <Form horizontal>
-                            <PageHeader><small><h3>Pagamentos</h3></small></PageHeader>
+                            <PageHeader>
+                                <small><h3>Pagamentos
+                                <LinkContainer to={'/form'} exact className="pull-right">
+                                    <Button className="pull-right" bsStyle="success">
+                                        <Icon name="plus"/> Novo Pagamento
+                                    </Button>
+                                </LinkContainer>
+                                </h3></small>
+                            </PageHeader>
                             <Panel header="Busca de Pagamentos">
                                 <PagamentoBusca/>
                             </Panel>
@@ -139,20 +147,6 @@ class CompraBox extends Component{
                             <Panel header="Lista de Pagamentos">
                                     <CompraTabela pagamentos={this.state.pagamentos} />
                                 </Panel>
-                            <LinkContainer to={'/form'} exact>
-                                <Button className="pull-right" bsStyle="success">
-                                    <Icon name="plus"/> Novo Pagamento
-                                </Button>
-                            </LinkContainer>
-
-                                {/*<PageHeader><small><h4 className="rs-title">Informações de compra</h4></small></PageHeader>*/}
-                                {/*<Button*/}
-                                    {/*bsStyle="success">*/}
-                                    {/*<Icon name="plus"/>*/}
-                                    {/*<LinkContainer to={'/compras'}>*/}
-                                        {/*Novo*/}
-                                    {/*</LinkContainer>*/}
-                                {/*</Button>*/}
                         </Form>
                     </Col>
                 </Row>

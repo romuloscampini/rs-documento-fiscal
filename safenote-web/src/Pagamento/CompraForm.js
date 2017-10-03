@@ -70,12 +70,17 @@ class CompraForm extends Component {
         console.log(id);
         console.log(documentos);
 
-        var req = request.post(urlAPI.pagamento + '/upload');
-        documentos.forEach((file)=> {
-            req.attach(id, file.name, file);
-        });
-        req.end(function(err, res){
-            console.log(res);
+        // var form = new FormData();
+        documentos.forEach(doc => {
+            request.post(urlAPI.pagamento + '/upload')
+                .field('id', id)
+                .attach('documento', doc.file)
+                .field('tipoDocumento', doc.tipoDocumento)
+                .end(function(err, res){
+                    console.log(res);
+                    console.log(err);
+                });
+
         });
     }
 
@@ -149,27 +154,12 @@ class CompraForm extends Component {
             metodo = 'POST';
         }
 
-        // let data = {
-        //     pagamento: JSON.stringify(pagamento),
-        //     documentos: documentos
-        // };
-        // console.log(documentos);
-
-        // let fd = new FormData();
-        // fd.append("pagamento", JSON.stringify(pagamento));
-        // fd.append("documentos", JSON.stringify(documentos));
-        // documentos.forEach((documento)=> {
-        //     fd.append("documentos[]", documento);
-        // });
-
         // http://stackoverflow.com/questions/12693947/jquery-ajax-how-to-send-json-instead-of-querystring
         $.ajax({
             url: url,
             data: JSON.stringify(pagamento),
             contentType: 'application/json',
             type: metodo,
-            // processData: false,  // tell jQuery not to process the data
-            // contentType: false,   // tell jQuery not to set contentType
             // headers: {'x-access-token': this.props.token},
             success: (response) => {
                 console.log(response, response.mensagem);

@@ -44,8 +44,16 @@ class DocumentoFormUpload extends Component{
     uploadFile(acceptedFiles) {
         console.log(acceptedFiles);
         let documento = this.state.documento;
-        documento['file'] = acceptedFiles;
+        // documento['file'] = acceptedFiles;
+        acceptedFiles.forEach(file => {
+            documento['file'] = file;
+        });
         this.setState({[documento]: documento});
+        console.log(`Estado após upload ${this.state}`);
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log(`Proxima propriedade: ${nextProps}`);
     }
 
     save(){
@@ -79,7 +87,16 @@ class DocumentoFormUpload extends Component{
                 label: 'Outros' }
         ];
 
-        const infoDoc = [];
+        let infoDoc = [];
+        if (this.state.documento.file) {
+            // let docs = this.state.documento.file;
+            // docs.forEach((doc) => {
+                infoDoc.push(
+                    <li>{this.state.documento.file.name}</li>
+                )
+            // });
+        }
+
 
         return(
             <div>
