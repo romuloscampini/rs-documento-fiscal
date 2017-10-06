@@ -44,12 +44,26 @@ public class PagamentoServiceImpl implements PagamentoService {
     }
 
     @Override
-    public List<Pagamento> findByNomeProduto(String nome) {
+    public List<Pagamento> findByPaymentName(String nome) {
         return repository.findPagamentos(nome);
     }
 
     @Override
-    public List<Pagamento> findByStatusPagamento(StatusPagamento statusPagamento) {
+    public Pagamento findById(String id) {
+//        return repository.findOne(id);
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(id)),
+                Pagamento.class);
+    }
+
+    @Override
+    public boolean delete(String id) {
+        repository.delete(id);
+        return true;
+    }
+
+
+    @Override
+    public List<Pagamento> findByPaymentStatus(StatusPagamento statusPagamento) {
 //        repository.find
         return repository.findPagamentos(statusPagamento.getDescricao());
     }

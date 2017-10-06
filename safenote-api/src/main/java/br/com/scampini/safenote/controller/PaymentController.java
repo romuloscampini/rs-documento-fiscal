@@ -1,7 +1,7 @@
 package br.com.scampini.safenote.controller;
 
 import br.com.scampini.safenote.model.Pagamento;
-import br.com.scampini.safenote.service.PagamentoService;
+import br.com.scampini.safenote.service.PaymentService;
 import br.com.scampini.safenote.types.ClassificacaoPagamento;
 import br.com.scampini.safenote.types.StatusPagamento;
 import br.com.scampini.safenote.types.Tipo;
@@ -12,7 +12,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +23,7 @@ import java.util.List;
 public class PagamentoController {
 
     @Autowired
-    private PagamentoService service;
+    private PaymentService service;
 
     private static Logger LOGGER = Logger.getLogger(PagamentoController.class);
 
@@ -61,19 +60,32 @@ public class PagamentoController {
         return service.getAll();
     }
 
+    @GetMapping("/{id}")
+    private Pagamento buscarPagamento(@PathVariable String id){
+        LOGGER.warn("ID RECEBIDO ======>>>>>>    " + id);
+        return service.findById(id);
+    }
+
+//    @CrossOrigin(origins = "*")
+    @DeleteMapping("/{id}")
+    private boolean deletarRegistro(@PathVariable String id){
+        LOGGER.info("Vai apagar...");
+        return service.delete(id);
+    }
+
 
 //    @GetMapping("/buscar")
 //    private @ResponseBody() List<Pagamento> procurarPagamentoPorNomeProduto(@RequestParam Map<String, String> queryMap){
 //        LOGGER.info("Buscando...");
 //        LOGGER.info(queryMap.toString());
 //
-//        return service.findByNomeProduto(queryMap.toString());
+//        return service.findByPaymentName(queryMap.toString());
 //        if (null != nomeProduto || !nomeProduto.isEmpty()) {
 //            LOGGER.info("Por nome do produto: " + nomeProduto);
-//            return service.findByNomeProduto(nomeProduto);
+//            return service.findByPaymentName(nomeProduto);
 //        }else if(null != statusPagamento){
 //            LOGGER.info("Por Status de Pagamento: " + statusPagamento.getDescricao());
-//            return service.findByStatusPagamento(statusPagamento);
+//            return service.findByPaymentStatus(statusPagamento);
 //        }
 //        return null;
 //    }
@@ -91,8 +103,8 @@ public class PagamentoController {
 
     @PostMapping("/upload")
     private boolean uploadFile(@RequestParam("id") String idPagamento, @RequestParam("documento") MultipartFile file, @RequestParam("tipoDocumento") TipoDocumento tipoDocumento) throws Exception{
-        LOGGER.error(file.getOriginalFilename());
-        return service.uploadDocumento(idPagamento, file, tipoDocumento);
+        LOGGER.info(file.getOriginalFilename());
+        return service.uploadDocument(idPagamento, file, tipoDocumento);
     }
 
 

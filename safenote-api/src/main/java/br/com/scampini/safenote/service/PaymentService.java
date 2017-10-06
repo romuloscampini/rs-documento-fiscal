@@ -18,9 +18,13 @@ public interface PagamentoService {
 
     List<Pagamento> getAll();
 
-    List<Pagamento> findByNomeProduto(String nome);
+    List<Pagamento> findByPaymentName(String nome);
 
-    List<Pagamento> findByStatusPagamento(StatusPagamento statusPagamento);
+    Pagamento findById(String id);
+
+    boolean delete(String id);
+
+    List<Pagamento> findByPaymentStatus(StatusPagamento statusPagamento);
 
     /**
      * Método para salvar uma compra

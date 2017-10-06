@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface PagamentoRepository extends MongoRepository<Pagamento, String> {
 
-    Pagamento findById(String id);
+//    Pagamento findById(String id);
 
     @Query("{pagamento:'?0'}")
     List<Pagamento> findPagamentos(String pagamento);
