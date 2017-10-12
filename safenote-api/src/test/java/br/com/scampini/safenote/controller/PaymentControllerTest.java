@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
  * @author romuloscampini
  * @since
  */
-public class PagamentoControllerTest {
+public class PaymentControllerTest {
 
     @Test
     public void givenUrl_whenGetRequest_thenFindGetResponse() throws Exception{

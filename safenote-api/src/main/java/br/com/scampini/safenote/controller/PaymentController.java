@@ -6,12 +6,16 @@ import br.com.scampini.safenote.types.ClassificacaoPagamento;
 import br.com.scampini.safenote.types.StatusPagamento;
 import br.com.scampini.safenote.types.Tipo;
 import br.com.scampini.safenote.types.TipoDocumento;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -20,12 +24,12 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/pagamentos")
-public class PagamentoController {
+public class PaymentController {
 
     @Autowired
     private PaymentService service;
 
-    private static Logger LOGGER = Logger.getLogger(PagamentoController.class);
+    private static Logger LOGGER = Logger.getLogger(PaymentController.class);
 
     @PostMapping("/mock")
     private boolean mockCompras(){
@@ -102,9 +106,21 @@ public class PagamentoController {
     }
 
     @PostMapping("/upload")
-    private boolean uploadFile(@RequestParam("id") String idPagamento, @RequestParam("documento") MultipartFile file, @RequestParam("tipoDocumento") TipoDocumento tipoDocumento) throws Exception{
+    private boolean uploadFile(@RequestParam("id") String paymentId, @RequestParam("documento") MultipartFile file, @RequestParam("tipoDocumento") TipoDocumento tipoDocumento) throws Exception{
         LOGGER.info(file.getOriginalFilename());
-        return service.uploadDocument(idPagamento, file, tipoDocumento);
+        return service.uploadDocument(paymentId, file, tipoDocumento);
+    }
+
+    @GetMapping(path="/download", produces="application/zip")
+    private @ResponseBody FileSystemResource downloadDocuments(@RequestParam("id") String paymentId, HttpServletResponse response) throws Exception{
+        File f = service.downloadDocuments(paymentId);
+        if(f != null) {
+            FileSystemResource fsr = new FileSystemResource(f);
+            response.setHeader("Content-Disposition", "attachment; filename=" + fsr.getFilename());
+            LOGGER.info(fsr.getFilename());
+            return fsr;
+        }
+        return null;
     }
 
 

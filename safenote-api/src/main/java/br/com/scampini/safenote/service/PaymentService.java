@@ -5,6 +5,7 @@ import br.com.scampini.safenote.types.StatusPagamento;
 import br.com.scampini.safenote.types.TipoDocumento;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
  *
  * @author romuloscampini
  */
-public interface PagamentoService {
+public interface PaymentService {
 
     List<Pagamento> getAll();
 
@@ -36,9 +37,11 @@ public interface PagamentoService {
 
     Pagamento save(String compra) throws Exception;
 
-    boolean uploadDocumento(String objectId, MultipartFile file, TipoDocumento tipoDocumento) throws IOException;
+    boolean uploadDocument(String objectId, MultipartFile file, TipoDocumento tipoDocumento) throws IOException;
 
     boolean save(Pagamento pagamento);
+
+    File downloadDocuments(String id) throws IOException;
 
 
 }

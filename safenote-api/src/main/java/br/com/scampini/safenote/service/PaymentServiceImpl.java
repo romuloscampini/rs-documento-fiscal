@@ -4,10 +4,10 @@ import br.com.scampini.safenote.model.Documento;
 import br.com.scampini.safenote.model.Pagamento;
 import br.com.scampini.safenote.repository.PagamentoRepository;
 import br.com.scampini.safenote.types.StatusPagamento;
-import br.com.scampini.safenote.types.Tipo;
 import br.com.scampini.safenote.types.TipoDocumento;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -17,10 +17,13 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by romuloscampini on 8/3/17.
@@ -28,9 +31,9 @@ import java.util.Map;
  * @author romuloscampini
  */
 @Service
-public class PagamentoServiceImpl implements PagamentoService {
+public class PaymentServiceImpl implements PaymentService {
 
-    private static Logger LOGGER = Logger.getLogger(PagamentoServiceImpl.class);
+    private static Logger LOGGER = Logger.getLogger(PaymentServiceImpl.class);
 
     @Autowired
     private PagamentoRepository repository;
@@ -128,7 +131,7 @@ public class PagamentoServiceImpl implements PagamentoService {
     }
 
     @Override
-    public boolean uploadDocumento(String objectId, MultipartFile file, TipoDocumento tipoDocumento) throws IOException{
+    public boolean uploadDocument(String objectId, MultipartFile file, TipoDocumento tipoDocumento) throws IOException{
         Documento documento = new Documento();
         documento.setNomeArquivo(file.getOriginalFilename());
         documento.setDocumento(file.getBytes());
@@ -146,5 +149,40 @@ public class PagamentoServiceImpl implements PagamentoService {
             LOGGER.error(ex);
             return false;
         }
+    }
+
+    @Override
+    public File downloadDocuments(String id) throws IOException{
+        List<Documento> documents = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(id)),
+                Pagamento.class).getDocumentos();
+        if (null != documents) {
+
+            /**
+             * filename = ObjectID-yyyyMMddHHmmss
+             * Example: 56ajkljvalkbjji890ru9u190-20171012073010
+             */
+            String filename = id +"-" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String extension = "zip";
+    //        File file = File.createTempFile(filename, extension);
+            File file = new File("/tmp/" + filename + "." + extension);
+            ZipOutputStream zipFile = new ZipOutputStream(new FileOutputStream(file));
+            documents
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .forEach(document -> {
+                        try {
+                            ZipEntry zipEntry = new ZipEntry(document.getNomeArquivo());
+                            zipFile.putNextEntry(zipEntry);
+                            zipFile.write(document.getDocumento(), 0, document.getDocumento().length);
+                            zipFile.closeEntry();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+            LOGGER.info("LISTA DE DOCUMENTOS -> " + documents.size());
+            zipFile.close();
+            return file;
+        }
+        return null;
     }
 }
