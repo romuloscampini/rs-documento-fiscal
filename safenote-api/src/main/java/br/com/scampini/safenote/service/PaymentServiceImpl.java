@@ -5,9 +5,9 @@ import br.com.scampini.safenote.model.Pagamento;
 import br.com.scampini.safenote.repository.PagamentoRepository;
 import br.com.scampini.safenote.types.StatusPagamento;
 import br.com.scampini.safenote.types.TipoDocumento;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -112,20 +112,21 @@ public class PaymentServiceImpl implements PaymentService {
      * @throws IOException
      */
     @Override
-    public Pagamento save(String compraJson) throws IOException {
+    public Pagamento save(String compraJson) throws Exception {
         try {
             Gson json = new Gson();
-            Pagamento pagamento = json.fromJson(compraJson, Pagamento.class);
-            System.out.println(compraJson);
+            Map<String, Object> pagamentoMap = json.fromJson(compraJson, Map.class);
+            final ObjectMapper mapper = new ObjectMapper();
+            final Pagamento pagamento = mapper.convertValue(pagamentoMap, Pagamento.class);
             return repository.save(pagamento);
         } catch (JsonSyntaxException ex) {
             System.out.println(ex);
             //TODO: Tratamento para identificar formato de data ou campo de data nulo
-            return null;
+            throw new RuntimeException(ex);
         } catch (Exception ex) {
             System.out.println(ex);
             LOGGER.error(ex);
-            return null;
+            throw new RuntimeException(ex);
         }
 
     }
@@ -167,8 +168,6 @@ public class PaymentServiceImpl implements PaymentService {
             File file = new File("/tmp/" + filename + "." + extension);
             ZipOutputStream zipFile = new ZipOutputStream(new FileOutputStream(file));
             documents
-                    .stream()
-                    .filter(Objects::nonNull)
                     .forEach(document -> {
                         try {
                             ZipEntry zipEntry = new ZipEntry(document.getNomeArquivo());
@@ -179,7 +178,7 @@ public class PaymentServiceImpl implements PaymentService {
                             e.printStackTrace();
                         }
                     });
-            LOGGER.info("LISTA DE DOCUMENTOS -> " + documents.size());
+            LOGGER.debug("Quantidade de arquivos compactados do documento( " + id + "): " + documents.size());
             zipFile.close();
             return file;
         }

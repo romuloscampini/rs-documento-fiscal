@@ -96,9 +96,14 @@ public class PaymentController {
 
 
     @PostMapping(path ="/salvar")
-    @ResponseBody
-    private Pagamento salvarCompra(@RequestBody String body) throws Exception{
-        return service.save(body);
+    private @ResponseBody Pagamento salvarCompra(@RequestBody String body, HttpServletResponse response) throws Exception{
+        try {
+            return service.save(body);
+        }catch (Exception ex){
+            LOGGER.error(ex.getMessage());
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return null;
+        }
     }
 
     private boolean salvarCompraMap(@RequestParam("pagamento") String body, @RequestParam("documentos")  MultiValueMap<String, MultipartFile> documentos) throws Exception{

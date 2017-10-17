@@ -30,6 +30,9 @@ public class Pagamento {
     private StatusPagamento statusPagamento;
     private List<Documento> documentos;
 
+    public Pagamento() {
+    }
+
     public Pagamento(String nomeProduto, String nomeLoja, String nomeFornecedor, Date dataCompra, double valor, ClassificacaoPagamento classificacaoPagamento, Tipo tipo, StatusPagamento statusPagamento, List<Documento> documentos) {
         this.nomeProduto = nomeProduto;
         this.nomeLoja = nomeLoja;
