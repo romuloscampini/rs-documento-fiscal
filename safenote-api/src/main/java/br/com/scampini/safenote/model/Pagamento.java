@@ -23,6 +23,8 @@ public class Pagamento {
     private String nomeFornecedor;
 
     private Date dataCompra;
+    private Date dataVencimento;
+    private Date dataPagamento;
 
     private double valor;
     private ClassificacaoPagamento classificacaoPagamento;
@@ -33,11 +35,26 @@ public class Pagamento {
     public Pagamento() {
     }
 
+    @Deprecated
     public Pagamento(String nomeProduto, String nomeLoja, String nomeFornecedor, Date dataCompra, double valor, ClassificacaoPagamento classificacaoPagamento, Tipo tipo, StatusPagamento statusPagamento, List<Documento> documentos) {
         this.nomeProduto = nomeProduto;
         this.nomeLoja = nomeLoja;
         this.nomeFornecedor = nomeFornecedor;
         this.dataCompra = dataCompra;
+        this.valor = valor;
+        this.classificacaoPagamento = classificacaoPagamento;
+        this.tipo = tipo;
+        this.statusPagamento = statusPagamento;
+        this.documentos = documentos;
+    }
+
+    public Pagamento(String nomeProduto, String nomeLoja, String nomeFornecedor, Date dataCompra, Date dataVencimento, Date dataPagamento, double valor, ClassificacaoPagamento classificacaoPagamento, Tipo tipo, StatusPagamento statusPagamento, List<Documento> documentos) {
+        this.nomeProduto = nomeProduto;
+        this.nomeLoja = nomeLoja;
+        this.nomeFornecedor = nomeFornecedor;
+        this.dataCompra = dataCompra;
+        this.dataVencimento = dataVencimento;
+        this.dataPagamento = dataPagamento;
         this.valor = valor;
         this.classificacaoPagamento = classificacaoPagamento;
         this.tipo = tipo;
@@ -131,5 +148,21 @@ public class Pagamento {
                 ", tipo=" + tipo +
                 ", documentos=" + documentos +
                 '}';
+    }
+
+    public Date getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
+
+    public Date getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(Date dataPagamento) {
+        this.dataPagamento = dataPagamento;
     }
 }

@@ -11,11 +11,12 @@ class CompraTabela extends Component{
 
     render(){
 
-        const {pagamentos} = this.props;
+        const pagamentos = this.props.pagamentos;
+        const emitter = this.props.emitter;
 
         const pagamentoTabelaLinhas = [];
         pagamentos.forEach(pagamento => {
-            pagamentoTabelaLinhas.push(<CompraTabelaLinha key={pagamento.id} pagamento={pagamento} />);
+            pagamentoTabelaLinhas.push(<CompraTabelaLinha key={pagamento.id} pagamento={pagamento} emitter={emitter}/>);
         });
 
             {/*<Table striped bordered hover responsive>*/}
@@ -24,10 +25,10 @@ class CompraTabela extends Component{
                 <thead>
                     <tr>
                         {/*<th>ID</th>*/}
-                        <th>Produto</th>
+                        <th>Nome</th>
                         <th>Loja</th>
                         <th>Fornecedor</th>
-                        <th>Data Compra</th>
+                        <th>Data Vencimento</th>
                         {/*<th>Valor</th>*/}
                         <th><Icon name="paperclip" title="Possui Documentos ?"/></th>
                         <th>Pago</th>

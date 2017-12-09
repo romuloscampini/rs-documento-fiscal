@@ -17,7 +17,7 @@ class UploadBox extends Component {
         console.log('Rejected files: ', rejectedFiles);
 
         this.props.uploadFile(this.props.propriedade, acceptedFiles);
-        // var req = request.post(urlAPI.pagamento + '/upload');
+        // var req = request.post(API_URL.pagamento + '/upload');
         // acceptedFiles.forEach((file)=> {
         //     req.attach(file.name, file);
         // });

@@ -17,7 +17,7 @@ import {
 import Promise from 'es6-promise';
 import { Icon } from 'react-fa';
 import { LinkContainer } from 'react-router-bootstrap';
-import urlApi from '../config/Routes';
+import API_URL from '../config/Routes';
 
 import CompraTabela from "./CompraTabela";
 import Input from "../components/Input";
@@ -26,6 +26,7 @@ import SelectBox from "../components/SelectBox";
 const request = require('superagent-promise')(require('superagent'), Promise);
 
 const getJson = (res) => {
+    console.log(res);
     return res.body;
 };
 
@@ -104,18 +105,31 @@ class CompraBox extends Component{
         super(props);
 
         this.state = {
-            pagamentos: []
+            pagamentos: [],
+            buscaEmProgresso: false
         };
+
+        this.atualizaLista = this.atualizaLista.bind(this);
     }
 
-    componentWillMount(){
-        request.get(urlApi.pagamento)
+    componentDidMount(){
+        const emitter = this.props.emitter;
+        this.props.emitter.emit('mostraMensagem', 'success', 'Cadastro realizado com sucesso');
+        emitter.addListener('atualizaLista', this.atualizaLista);
+    }
+
+    atualizaLista(){
+        this.setState({buscaEmProgresso: true});
+        request.get(API_URL.pagamento)
             .accept('application/json')
+            // fetch(API_URL.pagamento)
             .then(getJson)
             .then(dados => {
                 console.log("Size de Dados: " + dados.length);
                 console.log("Dados: " + dados);
+                this.props.emitter.emit('mostraMensagem', 'success', 'Cadastro realizado com sucesso');
                 this.setState({pagamentos: dados});
+                this.setState({buscaEmProgresso: false});
                 // console.log('tamanho array: ' + this.state.compras.length);
             })
             .catch(error => {
@@ -123,17 +137,27 @@ class CompraBox extends Component{
             });
     }
 
+    componentWillMount(){
+        this.atualizaLista();
+    }
+
     render(){
-            {/*<Grid bsClass="container-fluid">*/}
+
+        let icone;
+        if (this.state.buscaEmProgresso) {
+            icone = <Icon spin name="spinner" />;
+        } else {
+            icone = <span></span>;
+        }
+
         return (
             <Grid>
                 <Row style={{marginBottom: 15}}>
-                    {/*<Col xs={12} md={10} mdOffset={1}>*/}
                     <Col>
                         <Form horizontal>
                             <PageHeader>
                                 <small><h3>Pagamentos
-                                <LinkContainer to={'/form'} exact className="pull-right">
+                                <LinkContainer to={`${this.props.match.path}/form`} className="pull-right">
                                     <Button className="pull-right" bsStyle="success">
                                         <Icon name="plus"/> Novo Pagamento
                                     </Button>
@@ -144,9 +168,10 @@ class CompraBox extends Component{
                                 <PagamentoBusca/>
                             </Panel>
 
-                            <Panel header="Lista de Pagamentos">
-                                    <CompraTabela pagamentos={this.state.pagamentos} />
-                                </Panel>
+                            {/*<Panel header="Lista de Pagamentos">*/}
+                                {/*{icone}*/}
+                                <CompraTabela {...this.props} pagamentos={this.state.pagamentos} />
+                            {/*</Panel>*/}
                         </Form>
                     </Col>
                 </Row>

@@ -184,4 +184,17 @@ public class PaymentServiceImpl implements PaymentService {
         }
         return null;
     }
+
+    @Override
+    public boolean confirmPayment(String objecjId) throws Exception {
+        Pagamento pagamento = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(objecjId)),
+                Pagamento.class);
+        if(pagamento.getStatusPagamento() == StatusPagamento.PAGO){
+            return false;
+        }else{
+            pagamento.setStatusPagamento(StatusPagamento.PAGO);
+            mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(objecjId)), new Update().set("statusPagamento", StatusPagamento.PAGO), Pagamento.class);
+            return true;
+        }
+    }
 }

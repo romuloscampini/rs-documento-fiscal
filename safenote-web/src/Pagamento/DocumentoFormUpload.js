@@ -13,7 +13,6 @@ import {
     Row,
     Col
 } from 'react-bootstrap';
-import NotificationSystem from 'react-notification-system';
 import request from 'superagent';
 import { Icon } from 'react-fa';
 import Dropzone from 'react-dropzone';
@@ -32,6 +31,8 @@ class DocumentoFormUpload extends Component{
         };
     }
 
+
+
     handleChange(propriedade, novoValor) {
         console.log(`handleChange da propriedade ${propriedade} e valor ${novoValor}`);
         const documento = this.state.documento;
@@ -49,6 +50,7 @@ class DocumentoFormUpload extends Component{
             documento['file'] = file;
         });
         this.setState({[documento]: documento});
+        this.props.handleDocumentoChange(this.state.documento);
         console.log(`Estado após upload ${this.state}`);
     }
 
@@ -58,11 +60,6 @@ class DocumentoFormUpload extends Component{
 
     save(){
         console.log(this.state.documento.file);
-        this.props.handleDocumentoChange(this.state.documento);
-        this.props.onHide();
-    }
-
-    close(){
         this.props.onHide();
     }
 
@@ -100,7 +97,6 @@ class DocumentoFormUpload extends Component{
 
         return(
             <div>
-                <NotificationSystem ref="notificationSystem" />
                 <Grid >
                     <Row style={{marginBottom: 15}}>
                         <Col>
@@ -119,15 +115,15 @@ class DocumentoFormUpload extends Component{
                                         </Col>
                                     </FormGroup>
 
-                                    <ButtonToolbar>
-                                        <Button className="pull-left" bsStyle="default" onClick={this.close.bind(this)}>
-                                            <Icon name="close"/> Cancelar
-                                        </Button>
+                                    {/*<ButtonToolbar>*/}
+                                        {/*<Button className="pull-left" bsStyle="default" onClick={this.close.bind(this)}>*/}
+                                            {/*<Icon name="close"/> Cancelar*/}
+                                        {/*</Button>*/}
 
-                                        <Button bsStyle="primary" onClick={this.save.bind(this)}>
-                                            <Icon name="floppy-o"/> Salvar
-                                        </Button>
-                                    </ButtonToolbar>
+                                        {/*<Button bsStyle="primary" onClick={this.save.bind(this)}>*/}
+                                            {/*<Icon name="floppy-o"/> Incluir*/}
+                                        {/*</Button>*/}
+                                    {/*</ButtonToolbar>*/}
                                 </FormGroup>
                             </Form>
                         </Col>

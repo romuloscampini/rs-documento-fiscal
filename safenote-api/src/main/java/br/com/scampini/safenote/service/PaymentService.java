@@ -43,5 +43,7 @@ public interface PaymentService {
 
     File downloadDocuments(String id) throws IOException;
 
+    boolean confirmPayment(String objecjId) throws Exception;
+
 
 }

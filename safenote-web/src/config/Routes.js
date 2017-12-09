@@ -2,8 +2,8 @@
  * Created by romuloscampini.
  */
 
-const urlAPI = {
+const API_URL = {
     pagamento: 'http://localhost:8080/api/pagamentos'
 };
 
-module.exports = urlAPI;
+module.exports = API_URL;

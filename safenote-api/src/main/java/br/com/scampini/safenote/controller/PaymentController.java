@@ -77,6 +77,17 @@ public class PaymentController {
         return service.delete(id);
     }
 
+    @PostMapping("/pay")
+    public boolean confirmPayment(@RequestParam("id") String id){
+        try {
+            return service.confirmPayment(id);
+        }catch (Exception ex){
+            return false;
+        }
+    }
+//    5a0b31238d8aa91762c5db35
+
+
 
 //    @GetMapping("/buscar")
 //    private @ResponseBody() List<Pagamento> procurarPagamentoPorNomeProduto(@RequestParam Map<String, String> queryMap){
