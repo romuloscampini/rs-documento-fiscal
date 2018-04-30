@@ -8,16 +8,12 @@ import Dropzone from 'react-dropzone';
 
 class UploadBox extends Component {
 
-    constructor(props){
-        super(props)
-    }
-
     uploadFile(acceptedFiles, rejectedFiles) {
-        console.log('Accepted files: ', acceptedFiles);
-        console.log('Rejected files: ', rejectedFiles);
+        // console.log('Accepted files: ', acceptedFiles);
+        // console.log('Rejected files: ', rejectedFiles);
 
         this.props.uploadFile(this.props.propriedade, acceptedFiles);
-        // var req = request.post(API_URL.pagamento + '/upload');
+        // var req = request.post(apiRoutes.expenses + '/upload');
         // acceptedFiles.forEach((file)=> {
         //     req.attach(file.name, file);
         // });

@@ -10,7 +10,7 @@ services:
     volumes:
       - /opt/scampini/containers/data/safenotedb:/data/db
 
-  back:
-    image:
+#  back:
+#    image:
 #    environment:
 #      -

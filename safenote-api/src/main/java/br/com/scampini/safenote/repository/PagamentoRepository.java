@@ -1,7 +1,6 @@
 package br.com.scampini.safenote.repository;
 
-import br.com.scampini.safenote.model.Pagamento;
-import br.com.scampini.safenote.types.StatusPagamento;
+import br.com.scampini.safenote.despesa.Despesa;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -11,13 +10,13 @@ import java.util.List;
  * @author romuloscampini
  */
 
-public interface PagamentoRepository extends MongoRepository<Pagamento, String> {
+public interface PagamentoRepository extends MongoRepository<Despesa, String> {
 
-//    Pagamento findById(String id);
+//    Despesa findById(String id);
 
     @Query("{pagamento:'?0'}")
-    List<Pagamento> findPagamentos(String pagamento);
+    List<Despesa> findPagamentos(String pagamento);
 
-//    List<Pagamento> findPagamentos(StatusPagamento statusPagamento);
+//    List<Despesa> findPagamentos(Status statusPagamento);
 
 }

@@ -1,13 +1,7 @@
 package br.com.scampini.safenote.service;
 
-import br.com.scampini.safenote.model.Pagamento;
 import br.com.scampini.safenote.repository.PagamentoRepository;
-import br.com.scampini.safenote.types.ClassificacaoPagamento;
-import br.com.scampini.safenote.types.StatusPagamento;
-import br.com.scampini.safenote.types.Tipo;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Date;
 
 /**
  * Created by romuloscampini on 8/15/17.
@@ -20,27 +14,27 @@ public class DefaultPagamentoServiceImpl {
     private PagamentoRepository repository;
 
 //    public DefaultPagamentoServiceImpl(){
-//        Pagamento pag1 = new Pagamento("Monitor LED",
+//        Despesa pag1 = new Despesa("Monitor LED",
 //                "Balao da Informatica",
 //                "ACER",
 //                new Date(),
 //                700.0,
-//                ClassificacaoPagamento.PESSOAL,
+//                Classificacao.PESSOAL,
 //                Tipo.PRODUTO,
-//                StatusPagamento.PAGO,
+//                Status.PAGO,
 //                null,
 //                null,
 //                null,
 //                null);
 //        // save a couple of customers
-//        Pagamento pag2 = new Pagamento("DARF",
+//        Despesa pag2 = new Despesa("DARF",
 //                "RF",
 //                "Governo",
 //                new Date(),
 //                1230.00,
-//                ClassificacaoPagamento.GERAL,
+//                Classificacao.GERAL,
 //                Tipo.SERVICO,
-//                StatusPagamento.PENDENTE,
+//                Status.PENDENTE,
 //                null,
 //                null,
 //                null,

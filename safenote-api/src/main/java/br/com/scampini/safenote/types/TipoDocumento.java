@@ -7,9 +7,9 @@ package br.com.scampini.safenote.types;
  */
 public enum TipoDocumento {
 
-    COMPROVANTE_PAGAMENTO("Comprovante de Pagamento"),
+    COMPROVANTE_PAGAMENTO("Comprovante de Despesa"),
     NOTA_FISCAL("Nota Fiscal"),
-    BOLETO("Boleto ou Documento para Pagamento"),
+    BOLETO("Boleto ou Documento para Despesa"),
     REGISTRO_FISCAL("Registro Fiscal"),
     OUTROS("Outros");
 

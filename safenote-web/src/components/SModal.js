@@ -27,7 +27,7 @@ class SModal extends Component {
     }
 
     handleChange(event) {
-        console.log('Handle change: ' + this.props.propriedade + ' && Valor: ' + event.target.value);
+        // console.log('Handle change: ' + this.props.propriedade + ' && Valor: ' + event.target.value);
         this.props.handleChange(this.props.propriedade, event.target.value);
     }
 
@@ -76,8 +76,8 @@ class SModal extends Component {
                     {this.props.body}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button bsStyle={this.props.firstBsStyle ? this.props.firstBsStyle : "default" } onClick={this.props.firstBtnClick}>{firstBtnIcon} {this.props.firstBtnText}</Button>
-                    <Button bsStyle={this.props.secondBsStyle ? this.props.secondBsStyle : "primary" } onClick={this.props.secondBtnClick}>{secondBtnIcon} {this.props.secondBtnText}</Button>
+                    <Button bsStyle={this.props.firstBsStyle ? this.props.firstBsStyle : "default" } className={this.props.firstBtnClassName ? this.props.firstBtnClassName : "btn-fill" } onClick={this.props.firstBtnClick}>{firstBtnIcon} {this.props.firstBtnText}</Button>
+                    <Button bsStyle={this.props.secondBsStyle ? this.props.secondBsStyle : "primary" } className={this.props.secondBtnClassName ? this.props.secondBtnClassName : "btn-fill" } onClick={this.props.secondBtnClick}>{secondBtnIcon} {this.props.secondBtnText}</Button>
                 </Modal.Footer>
             </Modal>
         );

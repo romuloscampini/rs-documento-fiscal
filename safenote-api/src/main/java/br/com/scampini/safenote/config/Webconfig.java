@@ -7,19 +7,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * Created by romuloscampini on 7/6/17.
  */
 
 @Configuration
 public class Webconfig extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
-            }
-        };
-    }
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurerAdapter() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
+//            }
+//        };
+//    }
 }

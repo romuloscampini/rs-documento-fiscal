@@ -1,12 +1,11 @@
 package br.com.scampini.safenote.config;
 
 /**
- * Created by romuloscampini on 10/6/17.
- *
  * @author romuloscampini
- * @since
  */
 public final class Rotas {
 
-    public static String ROTA_PAGAMENTO = "/api/pagamentos";
+    public static final String API_VERSION = "v1";
+
+    public static final String ROTA_PAGAMENTO = "/api/"+API_VERSION+"/pagamentos";
 }
