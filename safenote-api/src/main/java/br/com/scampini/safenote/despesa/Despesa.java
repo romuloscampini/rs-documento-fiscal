@@ -1,6 +1,6 @@
 package br.com.scampini.safenote.despesa;
 
-import br.com.scampini.safenote.model.Documento;
+import br.com.scampini.safenote.documento.Documento;
 import br.com.scampini.safenote.types.Classificacao;
 import br.com.scampini.safenote.types.Origem;
 import br.com.scampini.safenote.types.Status;

@@ -67,4 +67,5 @@ nbdist/
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
+mvnw
 *.class

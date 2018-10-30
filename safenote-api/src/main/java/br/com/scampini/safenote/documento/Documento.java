@@ -1,4 +1,4 @@
-package br.com.scampini.safenote.model;
+package br.com.scampini.safenote.documento;
 
 import br.com.scampini.safenote.types.TipoDocumento;
 import org.springframework.data.annotation.Id;

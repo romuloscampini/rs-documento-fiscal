@@ -1,6 +1,6 @@
 package br.com.scampini.safenote.despesa;
 
-import br.com.scampini.safenote.model.Documento;
+import br.com.scampini.safenote.documento.Documento;
 import br.com.scampini.safenote.repository.PagamentoRepository;
 import br.com.scampini.safenote.types.Status;
 import br.com.scampini.safenote.types.TipoDocumento;
@@ -93,7 +93,7 @@ public class DespesaServiceImpl implements DespesaService {
             repository.save(despesa);
             return true;
         } catch (JsonSyntaxException ex) {
-            System.out.println(ex);
+            LOGGER.error(ex);
             //TODO: Tratamento para identificar formato de data ou campo de data nulo
             return false;
         } catch (Exception ex) {
@@ -192,7 +192,7 @@ public class DespesaServiceImpl implements DespesaService {
             return false;
         }else{
             despesa.setStatus(Status.PAGO);
-            mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(objecjId)), new Update().set("statusPagamento", Status.PAGO), Despesa.class);
+            mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(objecjId)), new Update().set("status", Status.PAGO), Despesa.class);
             return true;
         }
     }

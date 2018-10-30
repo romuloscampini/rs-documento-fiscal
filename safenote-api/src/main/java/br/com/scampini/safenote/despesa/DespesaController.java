@@ -4,6 +4,8 @@ import br.com.scampini.safenote.types.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,9 +71,14 @@ public class DespesaController {
 
 //    @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
-    private boolean deletarRegistro(@PathVariable String id){
+    private ResponseEntity deletarRegistro(@PathVariable String id){
         LOGGER.info("Vai apagar...");
-        return service.delete(id);
+        boolean deleted = service.delete(id);
+        if(deleted){
+            return new ResponseEntity("OK", HttpStatus.OK);
+        }else {
+            return new ResponseEntity("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/pay")
@@ -105,7 +112,7 @@ public class DespesaController {
 
     @PostMapping(path ="/salvar")
     private @ResponseBody
-    Despesa salvarCompra(@RequestBody String body, HttpServletResponse response) throws Exception{
+    Despesa salvarCompra(@RequestBody String body, HttpServletResponse response) throws Exception {
         try {
             return service.save(body);
         }catch (Exception ex){

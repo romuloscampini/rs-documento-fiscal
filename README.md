@@ -1,6 +1,9 @@
-# SafeNote - Controle de Documentos Fiscais
-RS-SafeNote - Controle de Documentos Fiscais
+# Safe Expenses - Controle de Despesas
 
-```
-docker
-```
+## API
+ - Java
+ - Mongo
+ 
+## Front
+ - React
+ - Bootstrap
